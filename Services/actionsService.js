@@ -1,6 +1,5 @@
-
 const actionsRepositore = require('Repositories/actionsRepository');
-const usersServic=require('Services/usersServic')
+const usersService = require('Services/usersService')
 const dateUtils = require('utils/dateUtils.js');
 
 /**
@@ -27,7 +26,7 @@ const updateUserActions = async (userId) => {
     if (minActionObj.actionAllowd <= 0) throw new Error('No actions left');
     minActionObj.actionAllowd -= 1;
   } else {
-    const userMax = usersServic.getMaxActions(userId); 
+    const userMax = usersService.getMaxActions(userId); 
     actions.push({ id: userId, maxActions: userMax, date: today, actionAllowd: userMax - 1 });
   }
 
