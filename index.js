@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const authMiddleware = require('Middlewares/auth');
 const checkUserActions = require('Middlewares/checkUserActions');
@@ -10,15 +9,14 @@ const employeeController = require('Controller/employeeController');
 const shiftController = require('Controller/shiftController');
 const usersController = require('Controller/usersController');
 const usersWsController = require('Controller/usersWsController');
+const connectDB = require('Config/db');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+connectDB();
 
 // Public route for login/register (no auth required)
 app.use('/api/users', usersController);
