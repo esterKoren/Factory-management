@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
 });
 
 // יצירת מודל משתמשים
-const usersModel = mongoose.model('user', gradesSchema);
+const usersModel = mongoose.model('user', userSchema);
 
 
 

@@ -26,6 +26,8 @@
     "Repositories": "Repositories",
      "Models":"Models",
      "configs":"configs",
-     "utils":"utils"
+     "utils":"utils",
+     "Middlewares":"Middlewares",
+     "Validate": "Validate"
   }
 }

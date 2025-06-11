@@ -1,13 +1,24 @@
 const Joi = require('joi');
-// פונקצית ולדציה מחלקה
-const DepartmentValidate = (department) => {
-    const schema = Joi.object({
-      
-      Name: Joi.string().min(5).max(30).required(),//Department name
-      Manager:  Joi.string().required()//Department Manager
-    });
-  
-    return schema.validate(deparment);
+
+// This function validates a department object using Joi.
+const DepartmentValidate = (department, isUpdate = false) => {
+  const baseSchema = {
+    Name: Joi.string().min(5).max(30),
+    Manager: Joi.string()
   };
-  
-  module.exports = { departmentValidate };
+
+  const schema = Joi.object(
+    isUpdate
+      ? baseSchema // אם זה עדכון - לא דורשים שדות חובה
+      : {
+          ...baseSchema,
+          Name: baseSchema.Name.required(),
+          Manager: baseSchema.Manager.required()
+        }
+  );
+
+  return schema.validate(department);
+};
+
+module.exports = { DepartmentValidate };
+// This module exports a validation function for departments using Joi.

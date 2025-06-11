@@ -1,15 +1,22 @@
 const Joi = require('joi');
-// פונקצית ולדציה עובד
-const EmployeeValidate = (employee) => {
-    const schema = Joi.object({
-      
-        FirstName: Joi.string().min(5).max(25).required(),
-        StartWorkYear:Joi.number().min(1990).max(2025).require(),
-        DepartmentID:Joi.string().required()
 
-    });
-  
-    return schema.validate(employee);
+// פונקציית ולידציה לעובד חדש או לעדכון עובד קיים
+const EmployeeValidate = (employee, isUpdate = false) => {
+  const baseSchema = {
+    FirstName: Joi.string().min(5).max(25),
+    StartWorkYear: Joi.number().min(1990).max(2025),
+    DepartmentID: Joi.string()
   };
-  
-  module.exports = { EmployeeValidate };
+
+  const schema = isUpdate
+    ? Joi.object(baseSchema) // בעדכון - כל השדות אופציונליים
+    : Joi.object({           // ביצירה - כל השדות נדרשים
+        FirstName: baseSchema.FirstName.required(),
+        StartWorkYear: baseSchema.StartWorkYear.required(),
+        DepartmentID: baseSchema.DepartmentID.required()
+      });
+
+  return schema.validate(employee);
+};
+
+module.exports = { EmployeeValidate };
